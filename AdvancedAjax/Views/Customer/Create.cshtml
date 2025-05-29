@@ -4,6 +4,28 @@
     ViewData["Title"] = "Create";
 }
 
+
+<style>
+
+    .custom-file-button input[type=file] {
+        margin-left: -2px !important;
+    }
+
+        .custom-file-button input[type=file]::-webkit-file-upload-button {
+            display: none;
+        }
+
+        .custom-file-button input[type=file]::file-selector-button {
+            display: none;
+        }
+
+    .custom-file-button:hover label {
+        background-color: #dde0e3;
+        cursor: pointer;
+    }
+
+</style>
+
 <h1>Create</h1>
 
 <h4>Customer</h4>
@@ -27,17 +49,49 @@
                 <input asp-for="EmailId" class="form-control" />
                 <span asp-validation-for="EmailId" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                <select asp-for="CountryId" class="form-control" asp-items="ViewBag.Countries" onchange="FillCities(this, '1stCity');"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="CityId" class="control-label"></label>
-                <select asp-for="CityId" class ="form-control" asp-items="ViewBag.CityId"></select>
+                <select id="1stCity" asp-for="CityId" class ="form-control" asp-items="ViewBag.Cities"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="PhotoUrl" class="control-label"></label>
-                <input asp-for="PhotoUrl" class="form-control" />
-                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+
+            <div class="col-md-12 btn-group pb-2">
+
+                <div class="form-group col-4 p-0">
+
+                    <label asp-for="ProfilePhoto" class="control-label"></label>
+
+                    <img id="PreviewPhoto" src="~/images/noimage.png" alt="Logo Image"
+                         width="125" height="125" />
+
+                    <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+
+                </div>
+
+                <div class="col-1 p-0">
+                </div>
+
+                <div class="form-group col-7 p-0">
+                    <div class="input-group custom-file-button mt-5 pt-5">
+                        <input asp-for="ProfilePhoto" class="form-control custom-file-input" id="customFile">
+                        <label class="input-group-text" for="customFile">Browse</label>
+                    </div>
+                </div>
+
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+            <div class="form-group pt-0 mt-0">
+                <div ID="HiddenDiv" style="visibility: hidden;">
+                    <input asp-for="PhotoUrl" id="PhotoUrl" value="" />
+                </div>
             </div>
         </form>
     </div>
@@ -49,4 +103,42 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+         function FillCities(lstCountryCtrl,lstCityId)
+           {
+                    var lstCities = $("#"+lstCityId);
+                    lstCities.empty();
+
+                    lstCities.append($('<option/>',
+                       {
+                       value: null,
+                       text: "Select City"
+                       }));
+
+                        var selectedCountry = lstCountryCtrl.options[lstCountryCtrl.selectedIndex].value;
+
+                        if (selectedCountry != null &&	selectedCountry != '')
+                        {
+                            $.getJSON('@Url.Action("GetCitiesByCountry")', { countryId: selectedCountry }, function (cities)
+                            {
+                                    if (cities != null && !jQuery.isEmptyObject(cities))
+                                    {
+                                          $.each(cities, function (index,city)
+                                            {
+                                                lstCities.append($('<option/>',
+                                                {
+                                                    value: city.value,
+                                                    text: city.text
+                                                }));
+                                            });
+                                    };
+                            });
+                        }
+            return;
+        }
+
+
+    </script>
+
 }
