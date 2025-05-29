@@ -1,0 +1,23 @@
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Build outputs
+bin/
+obj/
+*.dll
+*.exe
+
+# .NET stuff
+*.pdb
+*.db
+*.mdb
+*.log
+*.deps.json
+
+# Publish files
+publish/
+
+# Framework folders
+net8.0/
