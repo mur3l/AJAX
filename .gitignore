@@ -9,15 +9,15 @@ obj/
 *.dll
 *.exe
 
-# .NET stuff
+# .NET runtime & debug artifacts
 *.pdb
 *.db
 *.mdb
 *.log
 *.deps.json
 
-# Publish files
+# Publish folder
 publish/
 
-# Framework folders
+# Framework-specific folders
 net8.0/
