@@ -42,6 +42,14 @@ namespace AdvancedAjax.Controllers
             return PartialView("_CreateModelForm", country);
         }
 
+        [HttpPost]
+        public IActionResult CreateModelForm(Country country)
+        {
+            _context.Add(country);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
         [HttpGet]
         public IActionResult Details(int Id)
         {
@@ -103,6 +111,25 @@ namespace AdvancedAjax.Controllers
         }
 
 
+        public JsonResult GetCountries()
+        {
+            var countries = _context.Countries.ToList();
+
+            var lstCountries = countries.Select(ct => new SelectListItem()
+            {
+                Value = ct.Id.ToString(),
+                Text = ct.Name
+            }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----Select Country----"
+            };
+
+            lstCountries.Insert(0, defItem);
+            return Json(lstCountries);
+        }
 
     }
 }

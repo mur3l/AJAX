@@ -15,6 +15,16 @@
             <div id="DivCreateDialog" class="model-body"></div>
 
             <div class="model-footer">
+                @*<button type="button" class="btn btn-danger" data-icon="Close" data-bs-dismiss="model">Close</button>*@
+
+                <div class="btn-group">
+                    <div>
+                        <button id="dupBackBtn" type="button" class="btn btn-danger" data-icon="back" data-bs-dismiss="model">Back</button>
+                    </div>
+                    <div class="ml-4">
+                        <input id="dupSubmitBtn" type="button" value="Save" class="btn btn-primary" onclick="submitModelForm()"/>
+                    </div>
+                </div>
                 <button type="button" class="btn btn-danger" data-icon="Close" data-bs-dismiss="model">Close</button>
             </div>
         </div>

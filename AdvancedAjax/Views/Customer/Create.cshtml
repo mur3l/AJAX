@@ -62,9 +62,16 @@
                 </button>
             </div>
 
-            <div class="form-group">
+            <div class="form-group btn-group col-12">
+            <div class="col-11">
                 <label asp-for="CityId" class="control-label"></label>
                 <select id="1stCity" asp-for="CityId" class ="form-control" asp-items="ViewBag.Cities"></select>
+            </div>
+            <div class="col-1 mt-4">
+                <button class="btn btn-success" onclick="ShowCityCreateModel();">
+                    +
+                </button>
+            </div>
             </div>
 
             <div class="col-md-12 btn-group pb-2">
@@ -120,7 +127,7 @@
                     url: "/country/CreateModelForm",
                     type: 'get',
                     success: function (response) {
-                        $("DivCreateDialog").html(response;
+                        $("DivCreateDialog").html(response);
                             ShowCreateModelForm;
                     }
                 }
