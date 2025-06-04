@@ -36,6 +36,13 @@ namespace AdvancedAjax.Controllers
         }
 
         [HttpGet]
+        public IActionResult CreateModelForm()
+        {
+            Country country = new Country();
+            return PartialView("_CreateModelForm", country);
+        }
+
+        [HttpGet]
         public IActionResult Details(int Id)
         {
             Country country = GetCountry(Id);
