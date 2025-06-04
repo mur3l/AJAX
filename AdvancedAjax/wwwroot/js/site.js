@@ -15,7 +15,7 @@ function FillCities(lstCountryCtrl, lstCityId) {
     var selectedCountry = lstCountryCtrl.options[lstCountryCtrl.selectedIndex].value;
 
     if (selectedCountry != null && selectedCountry != '') {
-        $.getJSON('@Url.Action("GetCitiesByCountry")', { countryId: selectedCountry }, function (cities) {
+        $.getJSON('/Customer/getcitiesbycountry', { countryId: selectedCountry }, function (cities) {
             if (cities != null && !jQuery.isEmptyObject(cities)) {
                 $.each(cities, function (index, city) {
                     lstCities.append($('<option/>',
