@@ -114,17 +114,17 @@ namespace AdvancedAjax.Controllers
 
         [HttpGet]
 
-        public IActionResult CreateModelForm(int countryId)
+        public IActionResult CreateModalForm(int countryId)
         {
             City city = new City();
             city.CountryId = countryId;
             city.CountryName = GetCountryName(countryId);
-            return PartialView("_CreateModelForm", city);
+            return PartialView("_CreateModalForm", city);
         }
 
         [HttpPost]
 
-        public IActionResult CreateModelForm(City city)
+        public IActionResult CreateModalForm(City city)
         {
             _context.Add(city);
             _context.SaveChanges();

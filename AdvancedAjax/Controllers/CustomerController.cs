@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿ using Microsoft.AspNetCore.Mvc;
 
 namespace AdvancedAjax.Controllers
 {
@@ -45,6 +45,7 @@ namespace AdvancedAjax.Controllers
         [HttpGet]
         public IActionResult Details(int Id)
         {
+
             Customer customer = _context.Customers
               .Include(cty => cty.City)
               .Include(cou => cou.City.Country)
@@ -57,9 +58,7 @@ namespace AdvancedAjax.Controllers
         public IActionResult Edit(int Id)
         {
 
-            Customer customer = _context.Customers
-               .Include(co => co.City)
-               .Where(c => c.Id == Id).FirstOrDefault();
+            Customer customer = _context.Customers.Include(co => co.City).Where(c => c.Id == Id).FirstOrDefault();
 
             customer.CountryId = customer.City.CountryId;
             ViewBag.Countries = GetCountries();

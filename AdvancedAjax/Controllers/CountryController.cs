@@ -36,14 +36,14 @@ namespace AdvancedAjax.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateModelForm()
+        public IActionResult CreateModalForm()
         {
             Country country = new Country();
-            return PartialView("_CreateModelForm", country);
+            return PartialView("_CreateModalForm", country);
         }
 
         [HttpPost]
-        public IActionResult CreateModelForm(Country country)
+        public IActionResult CreateModalForm(Country country)
         {
             _context.Add(country);
             _context.SaveChanges();
@@ -113,9 +113,10 @@ namespace AdvancedAjax.Controllers
 
         public JsonResult GetCountries()
         {
-            var countries = _context.Countries.ToList();
+            var lstCountries = new List<SelectListItem>();
+            List<Country> countries = _context.Countries.ToList();
 
-            var lstCountries = countries.Select(ct => new SelectListItem()
+            lstCountries = countries.Select(ct => new SelectListItem()
             {
                 Value = ct.Id.ToString(),
                 Text = ct.Name

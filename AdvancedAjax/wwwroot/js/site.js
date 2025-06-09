@@ -3,30 +3,30 @@
 
 // Write your JavaScript code.
 
-function ShowCountryCreateModel() {
+function ShowCountryCreateModal() {
     $.ajax(
         {
-            url: "/country/CreateModelForm",
+            url: "/country/CreateModalForm",
             type: 'get',
             success: function (response) {
                 $("#DivCreateDialog").html(response);
-                ShowCreateModelForm();
+                ShowCreateModalForm();
             }
         });
-    return;:
+    return;
 }
 
-function ShowCityCreateModel() {
+function ShowCityCreateModal() {
     var lstCountryCtrl = document.getElementById('lstCountryId');
     var countryid = lstCountryCtrl.options[lstCountryCtrl.selectedIndex].value;
 
-    $ajax(
+    $.ajax(
         {
-            url: "/city/CreateModelFrom?countryid=" + countryid,
+            url: "/city/CreateModalFrom?countryId=" + countryid,
             type: 'get',
             success: function (response) {
-                $("DivCreateDialog").html(response);
-                ShowCreateModelForm();
+                $("#DivCreateDialog").html(response);
+                ShowCreateModalForm();
             }
         });
     return;
@@ -70,12 +70,12 @@ $(".custom-file-input").on("change", function () {
 
 });
 
-function ShowCreateModelForm() {
-    $("#DivCreateDialogHolder").model('show');
+function ShowCreateModalForm() {
+    $("#DivCreateDialogHolder").modal('show');
     return;
 }
 
-function submitModelForm() {
+function submitModalForm() {
     var btnSubmit = document.getElementById('btnSubmit');
     btnSubmit.click();
 }
@@ -104,7 +104,7 @@ function FillCountries(lstCountryId) {
 
     $getJSON("/country/GetCountries", function (countries) {
         if (countries != null && !jQuery.isEmptyObject(countries)) {
-            $each(countries, function (index, country) {
+            $.each(countries, function (index, country) {
                 lstCountries.append($('option/>', {
                     value: country.value,
                     text: country.text
