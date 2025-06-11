@@ -12,7 +12,8 @@ function ShowCountryCreateModal() {
                 $("#DivCreateDialog").html(response);
                 ShowCreateModalForm();
             }
-        });
+        }
+    );
     return;
 }
 
@@ -112,6 +113,5 @@ function FillCountries(lstCountryId) {
             });
         };
     });
-
     return;
 }
