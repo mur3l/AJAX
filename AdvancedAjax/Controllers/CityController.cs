@@ -4,7 +4,6 @@ namespace AdvancedAjax.Controllers
 {
     public class CityController : Controller
     {
-
         private readonly AppDbContext _context;
 
         public CityController(AppDbContext context)
@@ -27,23 +26,21 @@ namespace AdvancedAjax.Controllers
             return View(City);
         }
 
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Create(City City)
         {
-
             _context.Add(City);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
-
         }
 
         [HttpGet]
         public IActionResult Details(int Id)
         {
             City City = _context.Cities
-              .Where(c => c.Id == Id).FirstOrDefault();
-
+                .Where(c => c.Id == Id).FirstOrDefault();
             return View(City);
         }
 
@@ -51,12 +48,12 @@ namespace AdvancedAjax.Controllers
         public IActionResult Edit(int Id)
         {
             City City = _context.Cities
-              .Where(c => c.Id == Id).FirstOrDefault();
-
+                .Where(c => c.Id == Id).FirstOrDefault();
             ViewBag.Countries = GetCountries();
 
             return View(City);
         }
+
 
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -68,12 +65,11 @@ namespace AdvancedAjax.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet]
         public IActionResult Delete(int Id)
         {
             City City = _context.Cities
-              .Where(c => c.Id == Id).FirstOrDefault();
+                .Where(c => c.Id == Id).FirstOrDefault();
 
             return View(City);
         }
@@ -86,15 +82,13 @@ namespace AdvancedAjax.Controllers
             _context.Entry(City).State = EntityState.Deleted;
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
-        }
 
+        }
 
         private List<SelectListItem> GetCountries()
         {
             var lstCountries = new List<SelectListItem>();
-
             List<Country> Countries = _context.Countries.ToList();
-
             lstCountries = Countries.Select(ct => new SelectListItem()
             {
                 Value = ct.Id.ToString(),
@@ -106,14 +100,11 @@ namespace AdvancedAjax.Controllers
                 Value = "",
                 Text = "----Select Country----"
             };
-
             lstCountries.Insert(0, defItem);
-
             return lstCountries;
         }
 
         [HttpGet]
-
         public IActionResult CreateModalForm(int countryId)
         {
             City city = new City();
@@ -123,7 +114,6 @@ namespace AdvancedAjax.Controllers
         }
 
         [HttpPost]
-
         public IActionResult CreateModalForm(City city)
         {
             _context.Add(city);
@@ -131,15 +121,13 @@ namespace AdvancedAjax.Controllers
             return NoContent();
         }
 
-        public string GetCountryName(int countryId)
+        private string GetCountryName(int countryId)
         {
             if (countryId == 0)
                 return "";
-
             string strCountryName = _context.Countries
                 .Where(ct => ct.Id == countryId)
                 .Select(nm => nm.Name).Single().ToString();
-
             return strCountryName;
         }
     }
