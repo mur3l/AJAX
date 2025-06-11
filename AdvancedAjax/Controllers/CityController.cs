@@ -26,7 +26,7 @@ namespace AdvancedAjax.Controllers
             return View(City);
         }
 
-
+        
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Create(City City)
@@ -87,7 +87,7 @@ namespace AdvancedAjax.Controllers
 
         private List<SelectListItem> GetCountries()
         {
-            var lstCountries = new List<SelectListItem>();
+            var lstCountries = new List <SelectListItem>();
             List<Country> Countries = _context.Countries.ToList();
             lstCountries = Countries.Select(ct => new SelectListItem()
             {
@@ -131,4 +131,6 @@ namespace AdvancedAjax.Controllers
             return strCountryName;
         }
     }
+}
+
 }
