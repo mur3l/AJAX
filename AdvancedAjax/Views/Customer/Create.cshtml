@@ -53,25 +53,25 @@
             <div class="form-group btn-group col-12">
                 <div class="col-11">
                     <label asp-for="CountryId" class="control-label"></label>
-                    <select id="lstCountry" asp-for="CountryId" class="form-control" asp-items="ViewBag.Countries" onchange="FillCities(this, 'lstCity');"></select>
+                    <select id="lstCountryId" asp-for="CountryId" class="form-control" asp-items="ViewBag.Countries" onchange="FillCities(this,'lstCity');"></select>
                 </div>
-            </div>
-            <div class="col-1 mt-4">
-                <button class="btn btn-success" onclick="ShowCountryCreateModal();">
-                    +
-                </button>
+
+                <div class="col-1 mt-4">
+                    <button class="btn btn-success" onclick="ShowCountryCreateModal()">+</button>
+                </div>
             </div>
 
             <div class="form-group btn-group col-12">
-            <div class="col-11">
-                <label asp-for="CityId" class="control-label"></label>
-                <select id="lstCity" asp-for="CityId" class ="form-control" asp-items="ViewBag.Cities"></select>
-            </div>
-            <div class="col-1 mt-4">
-                <button class="btn btn-success" onclick="ShowCityCreateModal();">
-                    +
-                </button>
-            </div>
+                <div class="col-11">
+                    <label asp-for="CityId" class="control-label"></label>
+                    <select id="lstCity" asp-for="CityId" class="form-control" asp-items="ViewBag.Cities"></select>
+                </div>
+                <div class="col-1 mt-4">
+                    <button class="btn btn-success"
+                            onclick="ShowCityCreateModal();">
+                        +
+                    </button>
+                </div>
             </div>
 
             <div class="col-md-12 btn-group pb-2">
@@ -117,24 +117,25 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script type="text/javascript">
-         
         function ShowCountryCreateModal() {
-            $.ajax (
+            $.ajax(
                 {
                     url: "/country/CreateModalForm",
                     type: 'get',
                     success: function (response) {
                         $("#DivCreateDialog").html(response);
-                            ShowCreateModalForm();
+                        ShowCreateModalForm();
                     }
-                }
-            );
+                });
+
             return;
         }
 
-    </script>
 
+    </script>
 }
