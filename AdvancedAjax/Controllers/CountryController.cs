@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace AdvancedAjax.Controllers
+{ 
 public class CountryController : Controller
 {
     private readonly AppDbContext _context;

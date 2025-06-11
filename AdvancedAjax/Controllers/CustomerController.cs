@@ -2,6 +2,7 @@
 
 namespace AdvancedAjax.Controllers
 {
+
     public class CustomerController : Controller
     {
         private readonly AppDbContext _context;
@@ -33,9 +34,10 @@ namespace AdvancedAjax.Controllers
         [HttpPost]
         public IActionResult Create(Customer customer)
         {
-
             string uniqueFileName = GetProfilePhotoFileName(customer);
             customer.PhotoUrl = uniqueFileName;
+
+
             _context.Add(customer);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -58,11 +60,16 @@ namespace AdvancedAjax.Controllers
         public IActionResult Edit(int Id)
         {
 
-            Customer customer = _context.Customers.Include(co => co.City).Where(c => c.Id == Id).FirstOrDefault();
+            Customer customer = _context.Customers
+                .Include(co => co.City)
+                .Where(c => c.Id == Id).FirstOrDefault();
+
 
             customer.CountryId = customer.City.CountryId;
+
             ViewBag.Countries = GetCountries();
-            ViewBag.Gities = GetCities(customer.CountryId);
+            ViewBag.Cities = GetCities(customer.CountryId);
+
             return View(customer);
         }
 
@@ -70,11 +77,13 @@ namespace AdvancedAjax.Controllers
         [HttpPost]
         public IActionResult Edit(Customer customer)
         {
+
             if (customer.ProfilePhoto != null)
             {
                 string uniqueFileName = GetProfilePhotoFileName(customer);
                 customer.PhotoUrl = uniqueFileName;
             }
+
             _context.Attach(customer);
             _context.Entry(customer).State = EntityState.Modified;
             _context.SaveChanges();
