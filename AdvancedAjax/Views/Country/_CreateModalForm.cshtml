@@ -2,6 +2,10 @@
 
 
 
+@{
+    ViewData["Title"] = "_CreateModalForm";
+}
+
 <h1>_CreateModalForm</h1>
 
 <h4>Country</h4>
@@ -25,7 +29,7 @@
                 <input asp-for="CurrencyName" class="form-control" />
                 <span asp-validation-for="CurrencyName" class="text-danger"></span>
             </div>
-            <div class="form-group" style="display: none;">
+            <div class="form-group" style="display:none;">
                 <input id="btnSubmit" type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -33,8 +37,11 @@
 </div>
 
 
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
