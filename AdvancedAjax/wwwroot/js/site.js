@@ -3,33 +3,20 @@
 
 // Write your JavaScript code.
 
-function ShowCountryCreateModal() {
+function ShowCityCreateModal() {
+    var lstCountryCtrl = document.getElementById("lstCountryId");
+    var countryId = lstCountryCtrl.options[lstCountryCtrl.selectedIndex].value;
     $.ajax(
         {
-            url: "/country/CreateModalForm",
-            type: 'get',
-            success: function (response) {
-                $("#DivCreateDialog").html(response);
+            url: "/city/CreateModalFrom?countryId=" + countryId,
+
+            type: "GET",
+            success: function (responese) {
+                $("#DivCreateDialog").html(responese);
                 ShowCreateModalForm();
             }
         }
-    );
-    return;
-}
-
-function ShowCityCreateModal() {
-    var lstCountryCtrl = document.getElementById('lstCountryId');
-    var countryid = lstCountryCtrl.options[lstCountryCtrl.selectedIndex].value;
-
-    $.ajax(
-        {
-            url: "/city/CreateModalFrom?countryId=" + countryid,
-            type: 'get',
-            success: function (response) {
-                $("#DivCreateDialog").html(response);
-                ShowCreateModalForm();
-            }
-        });
+    )
     return;
 }
 
@@ -44,9 +31,8 @@ function FillCities(lstCountryCtrl, lstCityId) {
         }));
 
     var selectedCountry = lstCountryCtrl.options[lstCountryCtrl.selectedIndex].value;
-
     if (selectedCountry != null && selectedCountry != '') {
-        $.getJSON('/Customer/getcitiesbycountry', { countryId: selectedCountry }, function (cities) {
+        $.getJSON('/Customer/GetCitiesByCountry', { countryId: selectedCountry }, function (cities) {
             if (cities != null && !jQuery.isEmptyObject(cities)) {
                 $.each(cities, function (index, city) {
                     lstCities.append($('<option/>',
@@ -57,17 +43,17 @@ function FillCities(lstCountryCtrl, lstCityId) {
                 });
             };
         });
-    }
+    };
     return;
-}
+};
 
 $(".custom-file-input").on("change", function () {
 
     var fileName = $(this).val().split("\\").pop();
 
-    document.getElementById('PreviewPhoto').src = window.URL.createObjectURL(this.files[0]);
+    document.getElementById("PreviewPhoto").src = window.URL.createObjectURL(this.files[0]);
 
-    document.getElementById('PhotoUrl').value = fileName;
+    document.getElementById("PhotoUrl").value = fileName;
 
 });
 
@@ -77,20 +63,20 @@ function ShowCreateModalForm() {
 }
 
 function submitModalForm() {
-    var btnSubmit = document.getElementById('btnSubmit');
+    var btnSubmit = document.getElementById("btnSubmit");
     btnSubmit.click();
 }
 
 function refreshCountryList() {
-    var btnBack = document.getElementById('dupBackBtn');
+    var btnBack = document.getElementById("dupBackBtn");
     btnBack.click();
     FillCountries("lstCountryId");
 }
 
 function refreshCityList() {
-    var btnBack = document.getElementById('dupBackBtn');
+    var btnBack = document.getElementById("dupBackBtn");
     btnBack.click();
-    var lstCountryCtrl = document.getElementById('lstCountryId');
+    var lstCountryCtrl = document.getElementById("lstCountryId");
     FillCities(lstCountryCtrl, "lstCity")
 }
 
@@ -103,7 +89,7 @@ function FillCountries(lstCountryId) {
         text: "Select Country"
     }));
 
-    $getJSON("/country/GetCountries", function (countries) {
+    $getJSON('/country/GetCountries', function (countries) {
         if (countries != null && !jQuery.isEmptyObject(countries)) {
             $.each(countries, function (index, country) {
                 lstCountries.append($('option/>', {
