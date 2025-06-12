@@ -74,15 +74,15 @@ public class CountryController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private Country GetCountry(int id)
+    private Country GetCountry(int Id)
     {
-        Country country;
-        country = _context.Countries
-            .Where(c => c.Id == id).FirstOrDefault();
-        return country;
+       Country country;
+       country = _context.Countries.Where(c => c.Id == Id)
+            .FirstOrDefault();
+       return country;
     }
 
-    [HttpGet]
+        [HttpGet]
     public IActionResult Delete(int Id)
     {
         Country country = GetCountry(Id);
@@ -99,10 +99,10 @@ public class CountryController : Controller
             _context.Entry(country).State = EntityState.Deleted;
             _context.SaveChanges();
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
             _context.Entry(country).Reload();
-            ModelState.AddModelError("", ex.InnerException.Message);
+            ModelState.AddModelError("", e.InnerException.Message);
             return View(country);
         }
 
@@ -122,7 +122,7 @@ public class CountryController : Controller
         var defItem = new SelectListItem()
         {
             Value = "",
-            Text = "----Select Country----"
+            Text = "Select Country"
         };
 
         lstCountries.Insert(0, defItem);
