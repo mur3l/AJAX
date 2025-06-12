@@ -17,17 +17,18 @@ namespace AdvancedAjax.Controllers
 
         public IActionResult Index()
         {
-            List<Customer> Cities;
-            Cities = _context.Customers.ToList();
-            return View(Cities);
+            List<Customer> customers = _context.Customers
+                .Include(c => c.City)
+                .ToList();
+            return View(customers);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            Customer Customer = new Customer();
+            Customer customer = new Customer();
             ViewBag.Countries = GetCountries();
-            return View(Customer);
+            return View(customer);
         }
 
         [ValidateAntiForgeryToken]
@@ -61,8 +62,7 @@ namespace AdvancedAjax.Controllers
         {
 
             Customer customer = _context.Customers
-                .Include(co => co.City)
-                .Where(c => c.Id == Id).FirstOrDefault();
+                .Include(co => co.City).Where(c => c.Id == Id).FirstOrDefault();
 
 
             customer.CountryId = customer.City.CountryId;
@@ -92,19 +92,25 @@ namespace AdvancedAjax.Controllers
 
 
         [HttpGet]
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            Customer customer = _context.Customers.Where(c => c.Id == Id).FirstOrDefault();
+            Customer customer = _context.Customers
+                .Include(co => co.City)
+                .Include(co => co.City.Country)
+                .Where(c => c.Id == id).FirstOrDefault();
             return View(customer);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Delete(Customer customer)
+        public IActionResult DeleteConfirmed(int id)
         {
-            _context.Attach(customer);
-            _context.Entry(customer).State = EntityState.Deleted;
-            _context.SaveChanges();
+            var customer = _context.Customers.Find(id);
+            if (customer != null)
+            {
+                _context.Customers.Remove(customer);
+                _context.SaveChanges();
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -124,7 +130,7 @@ namespace AdvancedAjax.Controllers
             var defItem = new SelectListItem()
             {
                 Value = "",
-                Text = "----Select Country----"
+                Text = "Select Country"
             };
 
             lstCountries.Insert(0, defItem);
